@@ -1,0 +1,52 @@
+<div layout="row" layout-xs="column">
+
+    <md-content layout-padding flex='75'>
+    <nvd3 options="$ctrl.options" data="$ctrl.data" class="with-3d-shadow with-transitions"></nvd3>
+  </md-content>
+
+
+  <div flex>
+     <md-toolbar>
+      <div class="md-toolbar-tools">
+
+        <h2>
+          <span>{{$ctrl.highlighted.name}}</span>
+        </h2>
+        <span flex></span>
+        <md-button ng-show='$ctrl.highlighted._id' ng-click='$ctrl.removeHighlighted()'>
+          Remove
+        </md-button>
+
+      </div>
+    </md-toolbar>
+
+    <md-content layout-padding>
+      <div class='row'>
+
+          <div flex>
+          From :  <md-datepicker ng-model="$ctrl.minDate" md-max-date="$ctrl.maxDate" ng-change='$ctrl.fill()'></md-datepicker>
+          </div>
+          <div flex>
+          To :  <md-datepicker ng-model="$ctrl.maxDate" ng-change='$ctrl.fill()' md-max-date="$ctrl.myDate" md-min-date="$ctrl.minDate"></md-datepicker>
+          </div>
+        </div>
+        <div class='row'>
+          <div flex>
+
+            <md-switch ng-disabled='$ctrl.highlighted._id' ng-model="$ctrl.chartType" ng-change='$ctrl.changeChart()'>Showing {{$ctrl.chartType ? "Price" : "Change"}}</md-switch>
+          </div>
+        </div>
+      <form name="stocksPanel" >
+        <md-progress-linear md-mode="indeterminate" ng-show='$ctrl.sending'></md-progress-linear>
+
+        <md-chips name='stocks' md-on-remove="$ctrl.deleteStock($chip)" ng-model="$ctrl.stocks" md-max-chips="9" md-transform-chip="$ctrl.addStock($chip)" md-on-select='$ctrl.highlight($chip)' readonly='$ctrl.sending'  placeholder="Enter a ticker symbol">
+          <md-chip-template>
+            <strong>{{$chip.key}}</strong>
+            <em>{{$chip.name}}</em>
+          </md-chip-template>
+        </md-chips>
+
+      </form>
+    </md-content>
+  </div>
+</div>
